@@ -1,0 +1,47 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdn.tailwindcss.com"></script>
+		<title>Document</title>
+	</head>
+	<body class="bg-zinc-200">
+		<div  class="flex justify-center items-center " >
+		  <div class="flex flex-col  justify-center  h-screen w-2/6 gap-3 bg-zinc-300">
+                 <h1 class="text-5xl text-center">welcome to <span class="text-blue-600">Baggie</span></h1>
+                 <h2 class="text-2xl text-center">create your account</h2>
+            <div class="w-full">
+                <form method="post"  autocomplete="on" action="/signup" class="w-full flex flex-col items-center gap-3">
+					<input
+						type="text"
+                        name="username"
+						placeholder="Full Name"
+						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+					/>
+					<input
+						type="email"
+                        name="email"
+						placeholder="Email"
+						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+					/>
+					<input
+						type="password"
+                        name="password"
+						placeholder="Password"
+						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+					/>
+					<input
+						type="submit"
+						value="Create Account"
+						class="w-2/4 p-3 bg-blue-600 text-white rounded-3xl cursor-pointer hover:bg-blue-700"
+					/>
+				</form>
+
+               
+            </div>
+		</div>
+	</body>
+</html>
