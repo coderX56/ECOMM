@@ -8,22 +8,23 @@ const ownersRouter = require("./routes/ownersRouter.js");
 const usersRouter = require("./routes/usersRouter.js");
 const productRouter = require("./routes/productRouter.js");
 const flash = require("connect-flash");
+const exressSession = require("express-session");
 
 const db = require("./config/mongoose-connection.js");
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(cookieParser());
+app.use(cookieParser("baggie"));
 app.use(
-	exresssSession({
+	exressSession({
 		resave: false,
 		saveUninitialized: false,
-		secret: process.env.EXPRESS_SESSION_SECRET,
+		secret: "baggie",
 	})
 );
 app.use(flash());
-
+app.use("/", usersRouter);
 app.use("/owners", ownersRouter);
 app.use("/users", usersRouter);
 app.use("/product", productRouter);

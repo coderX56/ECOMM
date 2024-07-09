@@ -9,6 +9,16 @@
 		<title>Document</title>
 	</head>
 	<body class="bg-zinc-200">
+		<% if (messages.error) { %>
+			<div class="bg-red-500 text-white p-4 rounded-md mb-4">
+				<span class="inline-block"><%= messages.error %></span>
+			</div>
+		<% } %>
+		<% if (messages.success) { %>
+			<div class="bg-green-500 text-white p-4 rounded-md mb-4">
+				<span class="inline-block"><%= messages.success %></span>
+			</div>
+		<% } %>
 		<div  class="flex justify-center items-center " >
 		  <div class="flex flex-col  justify-center  h-screen w-2/6 gap-3 bg-zinc-300">
                  <h1 class="text-5xl text-center">welcome to <span class="text-blue-600">Baggie</span></h1>

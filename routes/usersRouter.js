@@ -5,20 +5,22 @@ const router = express.Router();
 const users = require("../models/user-schema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const isLoggedin = require("../middlewares/loginverify");
 
 router.get("/", (req, res) => {
-	res.render("signup");
+	let error = req.flash("error");
+	res.render("signup", { messages: req.flash() });
 });
 router.get("/login", (req, res) => {
-	res.render("login 	");
+	res.render("login");
 });
 router.post("/login", async (req, res) => {
 	try {
 		let exists = await users.findOne({ email: req.body.email });
-		if (!exists) res.send("User do not exists");
+		if (!exists) res.flash("error", "User do not exists");
 		else {
 			bcrypt.compare(req.body.password, exists.password, (err, result) => {
-				if (err) return res.send(err.message);
+				if (err) return res.flash(err.message);
 				if (result) {
 					let token = jwt.sign({ email, userId: exists._id }, "baggie");
 					res.cookie("token", token);
@@ -38,7 +40,7 @@ router.post("/signup", async (req, res) => {
 	try {
 		const { username, email, password } = req.body;
 		let exists = await users.findOne({ email: email });
-		if (exists) res.send("User exists");
+		if (exists) res.flash("sucess", "User exists");
 		else {
 			const salt = await bcrypt.genSalt(10);
 			const hash = await bcrypt.hash(password, salt);
@@ -54,6 +56,9 @@ router.post("/signup", async (req, res) => {
 			res.send(err.message);
 		};
 	}
+});
+router.get("/shop", isLoggedin, (req, res) => {
+	res.send("welcoms");
 });
 
 module.exports = router;

@@ -1,10 +1,9 @@
 /** @format */
 const jwt = require("jsonwebtoken");
 const users = require("../models/user-schema");
-async function isLoggedin(req, res, next) {
+module.exports = async function isLoggedin(req, res, next) {
 	if (!req.cookies.token) {
 		req.flash(" error", "You need to be logged in first");
-		res.redirect("/");
 	}
 	try {
 		let data = await jwt.verify(req.cookies.token, "baggie");
@@ -17,4 +16,4 @@ async function isLoggedin(req, res, next) {
 			res.redirect("/login");
 		};
 	}
-}
+};
