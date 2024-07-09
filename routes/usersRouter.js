@@ -2,10 +2,15 @@
 
 const express = require("express");
 const router = express.Router();
-const users = require("./models/user-schema.js");
+const users = require("../models/user-schema");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.get("/", (req, res) => {
-	res.send("signup");
+	res.render("signup");
+});
+router.get("/login", (req, res) => {
+	res.render("login 	");
 });
 router.post("/login", async (req, res) => {
 	try {
@@ -15,7 +20,7 @@ router.post("/login", async (req, res) => {
 			bcrypt.compare(req.body.password, exists.password, (err, result) => {
 				if (err) return res.send(err.message);
 				if (result) {
-					let token = jwt.sign({ email, usewrId: exists._id }, "baggie");
+					let token = jwt.sign({ email, userId: exists._id }, "baggie");
 					res.cookie("token", token);
 					res.send("Logged in successfully");
 				} else {
