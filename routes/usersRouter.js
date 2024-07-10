@@ -9,24 +9,38 @@ const isLoggedin = require("../middlewares/loginverify");
 
 router.get("/", (req, res) => {
 	let error = req.flash("error");
-	res.render("signup", { messages: req.flash() });
+	let success = req.flash("success");
+	res.render("login", { error, success });
 });
-router.get("/login", (req, res) => {
-	res.render("login");
+router.get("/signup", (req, res) => {
+	let error = req.flash("error");
+	let success = req.flash("success");
+	res.render("signup", { error, success });
+});
+router.get("/shop", isLoggedin, (req, res) => {
+	let success = req.flash("success");
+	res.render("shop", { success });
 });
 router.post("/login", async (req, res) => {
 	try {
 		let exists = await users.findOne({ email: req.body.email });
-		if (!exists) res.flash("error", "User do not exists");
-		else {
+		if (!exists) {
+			res.flash("error", "User do not exists");
+			res.redirect("/users/signup");
+		} else {
 			bcrypt.compare(req.body.password, exists.password, (err, result) => {
 				if (err) return res.flash(err.message);
 				if (result) {
-					let token = jwt.sign({ email, userId: exists._id }, "baggie");
+					let token = jwt.sign(
+						{ email: req.body.email, userId: exists._id },
+						"baggie"
+					);
 					res.cookie("token", token);
-					res.send("Logged in successfully");
+					req.flash("success", "Logged in successfully");
+					return res.redirect("/users/shop");
 				} else {
-					res.send("incorrect password");
+					req.flash("error", "incorrect password");
+					res.redirect("/");
 				}
 			});
 		}
@@ -40,8 +54,10 @@ router.post("/signup", async (req, res) => {
 	try {
 		const { username, email, password } = req.body;
 		let exists = await users.findOne({ email: email });
-		if (exists) res.flash("sucess", "User exists");
-		else {
+		if (exists) {
+			req.flash("error", "User exists");
+			res.redirect("/");
+		} else {
 			const salt = await bcrypt.genSalt(10);
 			const hash = await bcrypt.hash(password, salt);
 			await users.create({
@@ -49,6 +65,7 @@ router.post("/signup", async (req, res) => {
 				email,
 				password: hash,
 			});
+			req.flash("success", "User created successfully");
 			res.redirect("/login");
 		}
 	} catch {
@@ -56,9 +73,6 @@ router.post("/signup", async (req, res) => {
 			res.send(err.message);
 		};
 	}
-});
-router.get("/shop", isLoggedin, (req, res) => {
-	res.send("welcoms");
 });
 
 module.exports = router;

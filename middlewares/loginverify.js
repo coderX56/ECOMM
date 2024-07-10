@@ -3,7 +3,8 @@ const jwt = require("jsonwebtoken");
 const users = require("../models/user-schema");
 module.exports = async function isLoggedin(req, res, next) {
 	if (!req.cookies.token) {
-		req.flash(" error", "You need to be logged in first");
+		req.send(" error", "You need to be logged in first");
+		return res.redirect("/login");
 	}
 	try {
 		let data = await jwt.verify(req.cookies.token, "baggie");
@@ -12,7 +13,7 @@ module.exports = async function isLoggedin(req, res, next) {
 		next();
 	} catch {
 		(err) => {
-			res.flash("err", "Something went wrong ");
+			res.flash("error", "Something went wrong ");
 			res.redirect("/login");
 		};
 	}
