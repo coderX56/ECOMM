@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const users = require("../models/user-schema");
 module.exports = async function isLoggedin(req, res, next) {
 	if (!req.cookies.token) {
-		req.send(" error", "You need to be logged in first");
+		res.send(" error", "You need to be logged in first");
 		return res.redirect("/login");
 	}
 	try {

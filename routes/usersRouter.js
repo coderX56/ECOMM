@@ -6,6 +6,7 @@ const users = require("../models/user-schema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const isLoggedin = require("../middlewares/loginverify");
+const productModel = require("../models/product-schema");
 
 router.get("/", (req, res) => {
 	let error = req.flash("error");
@@ -17,15 +18,15 @@ router.get("/signup", (req, res) => {
 	let success = req.flash("success");
 	res.render("signup", { error, success });
 });
-router.get("/shop", isLoggedin, (req, res) => {
-	let success = req.flash("success");
-	res.render("shop", { success });
+router.get("/shop", isLoggedin, async (req, res) => {
+	let products = await productModel.find();
+	res.render("shop", { products });
 });
 router.post("/login", async (req, res) => {
 	try {
 		let exists = await users.findOne({ email: req.body.email });
 		if (!exists) {
-			res.flash("error", "User do not exists");
+			req.flash("error", "User do not exists");
 			res.redirect("/users/signup");
 		} else {
 			bcrypt.compare(req.body.password, exists.password, (err, result) => {

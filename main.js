@@ -25,7 +25,7 @@ app.use(
 );
 app.use(flash());
 app.use("/", usersRouter);
-app.use("/owners", ownersRouter);
+app.use("/owner", ownersRouter);
 app.use("/users", usersRouter);
 app.use("/product", productRouter);
 
