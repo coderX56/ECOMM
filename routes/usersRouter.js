@@ -5,22 +5,37 @@ const router = express.Router();
 const users = require("../models/user-schema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const isLoggedin = require("../middlewares/loginverify");
 const productModel = require("../models/product-schema");
 
-router.get("/", (req, res) => {
-	let error = req.flash("error");
-	let success = req.flash("success");
-	res.render("login", { error, success });
+router.get("/", async (req, res) => {
+	try {
+		let products = await productModel.find();
+		let user = null; // Initialize user as null
+		if (req.cookies.token) {
+			try {
+				const data = jwt.verify(req.cookies.token, "baggie");
+				user = await users.findOne({ email: data.email });
+			} catch (err) {
+				console.log(err.message);
+			}
+		}
+		let success = req.flash("success");
+		res.render("shop", { products, success, req, user });
+	} catch (err) {
+		console.log(err.message);
+		res.redirect("/users/login");
+	}
 });
+
 router.get("/signup", (req, res) => {
 	let error = req.flash("error");
 	let success = req.flash("success");
 	res.render("signup", { error, success });
 });
-router.get("/shop", isLoggedin, async (req, res) => {
-	let products = await productModel.find();
-	res.render("shop", { products });
+router.get("/login", async (req, res) => {
+	let error = req.flash("error");
+	let success = req.flash("success");
+	res.render("login", { error, success });
 });
 router.post("/login", async (req, res) => {
 	try {
@@ -38,10 +53,10 @@ router.post("/login", async (req, res) => {
 					);
 					res.cookie("token", token);
 					req.flash("success", "Logged in successfully");
-					return res.redirect("/users/shop");
+					return res.redirect("/");
 				} else {
 					req.flash("error", "incorrect password");
-					res.redirect("/");
+					res.redirect("/login");
 				}
 			});
 		}

@@ -9,9 +9,34 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<div class="min-h-screen flex flex-row">
-			<div class="h-screen w-2/6">
-				<ul class="flex flex-col justify-center h-full gap-10 p-5 text-xl">
+		<% if (success.length>0) { %>
+			<div class="bg-green-500 text-white p-4 rounded-md mb-4">
+				<span class="inline-block"><%= success %></span>
+			</div>
+		<% } %> 	
+		<div class="flex flex-col gap-20">
+		<div class="  flex items-center justify-around  h-16 bg-white fixed  w-screen border-b-1 border-zinc-200 ">
+		<div class="text-5xl font-bold  font-mono ml-28 pt-4 text-blue-600"><h1>Baggie</h1></div>
+		<div><input type="search" class="w-96 h-8 rounded-xl bg-cyan-50" /></div>
+		<% if (!req.cookies.token) { %>
+		<div class="flex gap-3  mr-12">
+				<div><a href="/users/login" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full text-xl px-8 py-2 ">Login</a></div>
+				<div><a href="/users/signup" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full text-lg px-8 py-2 ">Signup</a></div>
+			    <div></div>
+		
+		  </div>
+		  <% } 
+		  else { %>
+			<div class="flex gap-3  mr-12">
+			  <div><h1 class="font-semibold text-xl">Welcome <%=user.username%>...</h1></div>
+			  <div><img src="" class="h-2 w-2 rounded-full"></div>
+			  <div><a href="/users/cart" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full text-lg px-8 py-2 ">My Cart</a></div>
+			</div>
+			<%} %> 
+		</div>
+		<div class="min-h-screen flex flex-row mt-8">
+			<div class="h-screen w-72">
+				<ul class="flex flex-col justify-center h-full gap-6 p-5 text-lg">
 					<li><a href="">dhgevdhevhj</a></li>
 					<li><a href="">dhgevdhevhj</a></li>
 					<li><a href="">dhgevdhevhj</a></li>
@@ -19,14 +44,25 @@
 					<li><a href="">dhgevdhevhj</a></li>
 				</ul>
 			</div>
-			<div class="flex flex-wrap gap-5 justify-center items-center">
+			<div class="grid grid-cols-4 gap-5 justify-center pt-12">
 				<% products.forEach((product)=>{%>
-				<div
-					class="bg-[<%=product.bgcolor %>] shadow-lg border-1 rounded-md h-64 w-56">
-					<div class="bg-[<%=product.pannelcolor %>]"><%= product.name %></div>
-				</div>
+					<div class="flex flex-col transition duration-150 ease-out hover:ease-in">
+						<div class="bg-[<%= product.bgcolor %>] shadow-lg border-1 h-40 w-56"></div>
+							<div class="flex flex-col gap-0 text-lg p-2 justify-between h-20  bg-[<%= product.pannelcolor %>] text-[<%= product.textcolor %>] ">
+								<h1><%=product.name %></h1>
+                                <div class="flex gap-2">
+									<h1 class="line-through font-semibold">$ <%= product.price %>
+									<h1 class="font-bold"> <%= product.discount %>	
+									</div>
+								
+								
+							</div>
+						</div>
 				<%} )%>
 			</div>
+			
 		</div>
+		</div>
+	
 	</body>
 </html>
