@@ -7,13 +7,12 @@ const upload = require("../config/multer");
 
 router.post("/create", upload.single("image"), async (req, res) => {
 	try {
-		const { image, name, price, discount, bgcolor, pannelcolor, textcolor } =
-			req.body;
+		const { name, price, discount, bgcolor, pannelcolor, textcolor } = req.body;
 
 		// Check if all required fields are provided
 
 		const product = await products.create({
-			image,
+			image: req.file.filename,
 			name,
 			price,
 			discount,

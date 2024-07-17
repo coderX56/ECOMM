@@ -4,7 +4,7 @@ const users = require("../models/user-schema");
 module.exports = async function isLoggedin(req, res, next) {
 	if (!req.cookies.token) {
 		req.flash("error", "Need to be logged in");
-		return res.redirect("/users/login", { error });
+		return res.redirect("/");
 	}
 	try {
 		let data = await jwt.verify(req.cookies.token, "baggie");

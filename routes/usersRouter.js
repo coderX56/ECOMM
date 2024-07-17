@@ -6,11 +6,11 @@ const users = require("../models/user-schema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const productModel = require("../models/product-schema");
-
+const isLoggedin = require("../middlewares/loginverify");
 router.get("/", async (req, res) => {
 	try {
 		let products = await productModel.find();
-		let user = null; // Initialize user as null
+		let user = null;
 		if (req.cookies.token) {
 			try {
 				const data = jwt.verify(req.cookies.token, "baggie");
@@ -19,8 +19,9 @@ router.get("/", async (req, res) => {
 				console.log(err.message);
 			}
 		}
+		let error = req.flash("error");
 		let success = req.flash("success");
-		res.render("shop", { products, success, req, user });
+		res.render("shop", { products, user, success, error, req });
 	} catch (err) {
 		console.log(err.message);
 		res.redirect("/users/login");
@@ -36,6 +37,15 @@ router.get("/login", async (req, res) => {
 	let error = req.flash("error");
 	let success = req.flash("success");
 	res.render("login", { error, success });
+});
+router.get("/cart/:id", isLoggedin, async (req, res) => {
+	let user = await users.findOne({ email: req.user.email });
+	user.cart.push(req.params.id);
+	user.save();
+	let products = await productModel.find({ _id: { $in: user.cart } });
+	//let product = await productModel.findOne({ _id: req.params.id });
+
+	res.render("cart", { user, products });
 });
 router.post("/login", async (req, res) => {
 	try {

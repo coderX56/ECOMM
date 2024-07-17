@@ -6,14 +6,25 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 		<title>Document</title>
 	</head>
 	<body>
+		<div  id="flash" class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4 z-50">
+		<% if ( error.length>0) { %>
+			<div class=" justify-center  bg-red-500 text-white p-4 w-52 h-  rounded-md mb-4">
+				<span class="inline-block text-sm"><%= error %> </span>
+			</div>
+		<% } %>
 		<% if (success.length>0) { %>
 			<div class="bg-green-500 text-white p-4 rounded-md mb-4">
 				<span class="inline-block"><%= success %></span>
 			</div>
-		<% } %> 	
+		<% } %>
+		</div>
 		<div class="flex flex-col gap-20">
 		<div class="  flex items-center justify-around  h-16 bg-white fixed  w-screen border-b-1 border-zinc-200 ">
 		<div class="text-5xl font-bold  font-mono ml-28 pt-4 text-blue-600"><h1>Baggie</h1></div>
@@ -46,23 +57,38 @@
 			</div>
 			<div class="grid grid-cols-4 gap-5 justify-center pt-12">
 				<% products.forEach((product)=>{%>
-					<div class="flex flex-col transition duration-150 ease-out hover:ease-in">
-						<div class="bg-[<%= product.bgcolor %>] shadow-lg border-1 h-40 w-56"></div>
-							<div class="flex flex-col gap-0 text-lg p-2 justify-between h-20  bg-[<%= product.pannelcolor %>] text-[<%= product.textcolor %>] ">
+					<div class="flex flex-col">
+						<div class="flex justify-center items-center bg-[<%= product.bgcolor %>] shadow-lg border-1 h-40 w-56"> 
+							<img src="/images/products/<%= product.image %>" alt="image" class="h-32 w-44  ">
+</div>
+                        <div class="flex flex-row justify-between  gap-0 text-lg p-2 justify-between h-20  bg-[<%= product.pannelcolor %>] text-[<%= product.textcolor %>]">
+							<div class="flex flex-col ">
 								<h1><%=product.name %></h1>
                                 <div class="flex gap-2">
 									<h1 class="line-through font-semibold">$ <%= product.price %>
 									<h1 class="font-bold"> <%= product.discount %>	
 									</div>
-								
-								
 							</div>
-						</div>
+							<a
+								class="w-8 h-8 mt-3 mr-4  flex items-center justify-center rounded-full bg-white"
+								href="/users/cart/<%= product._id %>">
+								<i class="ri-add-line "></i>
+							</a>
+					</div>
+						
+					</div>
 				<%} )%>
-			</div>
-			
+
+					</div>
 		</div>
 		</div>
-	
+		<script>
+		setTimeout(() => {
+            const flashContainer = document.getElementById('flash');
+            if (flashContainer) {
+                flashContainer.remove();
+            }
+        }, 1000); // 5000 milliseconds = 5 seconds
+    </script>
 	</body>
 </html>

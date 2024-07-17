@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
 	username: { type: String },
 	email: String,
 	password: String,
-	cart: { type: Array, default: [] },
+	cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "products" }],
 	contact: Number,
 	profile: String,
 });
