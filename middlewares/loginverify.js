@@ -13,7 +13,7 @@ module.exports = async function isLoggedin(req, res, next) {
 		next();
 	} catch {
 		(err) => {
-			res.flash("error", "Something went wrong ");
+			req.flash("error", "Something went wrong ");
 			res.redirect("/login");
 		};
 	}

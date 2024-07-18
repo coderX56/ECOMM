@@ -25,8 +25,8 @@
 			</div>
 		<% } %>
 		</div>
-		<div class="flex flex-col gap-20">
-		<div class="  flex items-center justify-around  h-16 bg-white fixed  w-screen border-b-1 border-zinc-200 ">
+		<div class="flex  flex-col flex-wrap gap-20">
+		<div class="  flex items-center flex-wrap justify-around  h-16 bg-white fixed  w-screen border-b-1 border-zinc-200 ">
 		<div class="text-5xl font-bold  font-mono ml-28 pt-4 text-blue-600"><h1>Baggie</h1></div>
 		<div><input type="search" class="w-96 h-8 rounded-xl bg-cyan-50" /></div>
 		<% if (!req.cookies.token) { %>
@@ -55,11 +55,11 @@
 					<li><a href="">dhgevdhevhj</a></li>
 				</ul>
 			</div>
-			<div class="grid grid-cols-4 gap-5 justify-center pt-12">
+			<div class="grid grid-cols-4 grid-wrap sm:grid grid-rows gap-5 justify-center pt-12">
 				<% products.forEach((product)=>{%>
 					<div class="flex flex-col">
-						<div class="flex justify-center items-center bg-[<%= product.bgcolor %>] shadow-lg border-1 h-40 w-56"> 
-							<img src="/images/products/<%= product.image %>" alt="image" class="h-32 w-44  ">
+						<div class="flex justify-center items-center bg-[<%= product.bgcolor %>] shadow-lg border-1  h-48 w-full"> 
+							<img src="/images/products/<%= product.image %>" alt="image" class="object-fit h-48">
 </div>
                         <div class="flex flex-row justify-between  gap-0 text-lg p-2 justify-between h-20  bg-[<%= product.pannelcolor %>] text-[<%= product.textcolor %>]">
 							<div class="flex flex-col ">
