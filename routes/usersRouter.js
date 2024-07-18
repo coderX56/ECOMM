@@ -45,7 +45,7 @@ router.get("/cart/:id", isLoggedin, async (req, res) => {
 	let products = await productModel.find({ _id: { $in: user.cart } });
 	//let product = await productModel.findOne({ _id: req.params.id });
 
-	res.send("cart", { user, products });
+	res.render("cart", { user, products });
 });
 router.post("/login", async (req, res) => {
 	try {

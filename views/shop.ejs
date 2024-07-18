@@ -12,7 +12,7 @@
 />
 		<title>Document</title>
 	</head>
-	<body>
+	<body class="bg-gray-100">
 		<div  id="flash" class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4 z-50">
 		<% if ( error.length>0) { %>
 			<div class=" justify-center  bg-red-500 text-white p-4 w-52 h-  rounded-md mb-4">
@@ -26,9 +26,9 @@
 		<% } %>
 		</div>
 		<div class="flex  flex-col flex-wrap gap-20">
-		<div class="  flex items-center flex-wrap justify-around  h-16 bg-white fixed  w-screen border-b-1 border-zinc-200 ">
-		<div class="text-5xl font-bold  font-mono ml-28 pt-4 text-blue-600"><h1>Baggie</h1></div>
-		<div><input type="search" class="w-96 h-8 rounded-xl bg-cyan-50" /></div>
+		<div class="  flex items-center  justify-between  h-16 bg-white fixed  w-full  border-zinc-200 ">
+		<div class="text-4xl font-bold  px-10 pb-3 text-blue-600"><h1>Baggie</h1></div>
+		<div><input type="search" class="w-96 h-8 rounded-xl bg-cyan-50 border-2 pl-4 border-blue-100 " placeholder="Search Products" /></div>
 		<% if (!req.cookies.token) { %>
 		<div class="flex gap-3  mr-12">
 				<div><a href="/users/login" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full text-xl px-8 py-2 ">Login</a></div>
@@ -39,29 +39,29 @@
 		  <% } 
 		  else { %>
 			<div class="flex gap-3  mr-12">
-			  <div><h1 class="font-semibold text-xl">Welcome <%=user.username%>...</h1></div>
+			  <div><h1 class="font-semibold text-2xl">Welcome <%=user.username%>...</h1></div>
 			  <div><img src="" class="h-2 w-2 rounded-full"></div>
 			  <div><a href="/users/cart" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full text-lg px-8 py-2 ">My Cart</a></div>
 			</div>
 			<%} %> 
 		</div>
 		<div class="min-h-screen flex flex-row mt-8">
-			<div class="h-screen w-72">
-				<ul class="flex flex-col justify-center h-full gap-6 p-5 text-lg">
-					<li><a href="">dhgevdhevhj</a></li>
-					<li><a href="">dhgevdhevhj</a></li>
-					<li><a href="">dhgevdhevhj</a></li>
-					<li><a href="">dhgevdhevhj</a></li>
-					<li><a href="">dhgevdhevhj</a></li>
-				</ul>
-			</div>
-			<div class="grid grid-cols-4 grid-wrap sm:grid grid-rows gap-5 justify-center pt-12">
+		    <div class="  w-72 bg-white mt-[50px] rounded-lg  mx-3 p-5">
+                <ul class="flex flex-col p-14  gap-6 text-2xl">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">All products</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Account center</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+			<div class="grid grid-cols-4 grid-wrap sm:grid grid-rows gap-5 justify-center pt-12 ">
 				<% products.forEach((product)=>{%>
 					<div class="flex flex-col">
-						<div class="flex justify-center items-center bg-[<%= product.bgcolor %>] shadow-lg border-1  h-48 w-full"> 
+						<div class="flex justify-center items-center bg-[<%= product.bgcolor %>] shadow-lg rounded-t-xl  h-48 w-full"> 
 							<img src="/images/products/<%= product.image %>" alt="image" class="object-fit h-48">
 </div>
-                        <div class="flex flex-row justify-between  gap-0 text-lg p-2 justify-between h-20  bg-[<%= product.pannelcolor %>] text-[<%= product.textcolor %>]">
+                        <div class="flex flex-row justify-between   text-lg p-2  rounded-b-xl  bg-[<%= product.pannelcolor %>] text-[<%= product.textcolor %>]">
 							<div class="flex flex-col ">
 								<h1><%=product.name %></h1>
                                 <div class="flex gap-2">
