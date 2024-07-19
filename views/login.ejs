@@ -1,62 +1,64 @@
-    <!-- @format -->
+<!-- @format -->
 
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <script src="https://cdn.tailwindcss.com"></script>
-            <title>Document</title>
-        </head>
-        <body class="bg-white h-screen">
-            <div  id="flash" class="flex justify-center items-center   w-full">
-            <% if ( error.length>0) { %>
-                <div class=" justify-center  bg-red-500 text-white p-4 w-48 h-full  rounded-md mb-4">
-                    <span class="inline-block text-lg"><%= error %></span>
-                </div>
-            <% } %>
-            <% if (success.length>0) { %>
-                <div class="bg-green-500 text-white p-4 rounded-md mb-4">
-                    <span class="inline-block"><%= success %></span>
-                </div>
-            <% } %>
-            </div>
-            <div  class="flex justify-center items-center   h-full " >
-            <div class="flex flex-col  justify-center  h-2/4 w-2/5 gap-3 ">
-                    <h1 class="text-5xl text-center mb-3">Login to <span class="text-blue-600">Baggie</span></h1>
-                <div class="w-full ">
-                    <form method="post"  autocomplete="on" action="/login" class="w-full flex flex-col items-center gap-3">
-                        
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Email"
-                            class="w-2/3 p-3   bg-zinc-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-                        />
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            class="w-2/3 p-3 bg-zinc-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-                        />
-                        <input
-                            type="submit"
-                            value="Login"
-                            class="w-2/4 p-3  bg-blue-600 text-white rounded-3xl cursor-pointer hover:bg-blue-700"
-                        />
-                    </form>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdn.tailwindcss.com"></script>
+		<title>Document</title>
+	</head>
+	<body class="bg-zinc-200 h-screen">
+		<div id="flash" class="flex justify-center items-center w-full">
+			<% if ( error.length>0) { %>
+			<div
+				class="justify-center bg-red-500 text-white p-4 w-48 h-full rounded-md mb-4">
+				<span class="inline-block text-lg"><%= error %></span>
+			</div>
+			<% } %> <% if (success.length>0) { %>
+			<div class="bg-green-500 text-white p-4 rounded-md mb-4">
+				<span class="inline-block"><%= success %></span>
+			</div>
+			<% } %>
+		</div>
+		<div class="flex justify-center items-center h-full">
+			<div
+				class="flex flex-col justify-center bg-zinc-300 rounded-lg shadow-xl h-2/3 w-2/5 gap-3">
+				<h1 class="text-5xl text-center mb-3">
+					Login to <span class="text-blue-600">Baggie</span>
+				</h1>
+				<div class="w-full">
+					<form
+						method="post"
+						autocomplete="on"
+						action="/login"
+						class="w-full flex flex-col items-center gap-3">
+						<input
+							type="email"
+							name="email"
+							placeholder="Email"
+							class="w-2/3 p-3 bg-zinc-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" />
+						<input
+							type="password"
+							name="password"
+							placeholder="Password"
+							class="w-2/3 p-3 bg-zinc-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" />
+						<input
+							type="submit"
+							value="Login"
+							class="w-2/4 p-3 bg-blue-600 text-white rounded-3xl cursor-pointer hover:bg-blue-700" />
+					</form>
+				</div>
+			</div>
+		</div>
 
-                
-                </div>
-            </div>
-            <script>
-                setTimeout(() => {
-            const flash = document.getElementById('flash');
-            if (flash) {
-                flash.remove();
-            }
-        }, 2000)
-                
-            </script>
-        </body>
-    </html>
+		<script>
+			setTimeout(() => {
+				const flash = document.getElementById("flash");
+				if (flash) {
+					flash.remove();
+				}
+			}, 2000);
+		</script>
+	</body>
+</html>

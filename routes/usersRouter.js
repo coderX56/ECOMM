@@ -38,14 +38,34 @@ router.get("/login", async (req, res) => {
 	let success = req.flash("success");
 	res.render("login", { error, success });
 });
-router.get("/cart/:id", isLoggedin, async (req, res) => {
+router.get("/cart", isLoggedin, async (req, res) => {
 	let user = await users.findOne({ email: req.user.email });
-	user.cart.push(req.params.id);
-	user.save();
 	let products = await productModel.find({ _id: { $in: user.cart } });
-	//let product = await productModel.findOne({ _id: req.params.id });
+	let error = req.flash("error");
+	let success = req.flash("success");
+	res.render("cart", { error, success, user, products });
+});
+router.get("/cart/:id", isLoggedin, async (req, res) => {
+	try {
+		let user = await users.findOne({ email: req.user.email });
+		if (!user.cart.includes(req.params.id)) {
+			user.cart.push(req.params.id);
+			await user.save();
+			req.flash("success", "Product successfully added to cart");
+		} else {
+			req.flash("error", "Product exists in cart");
+		}
+		res.redirect("/");
+	} catch (err) {
+		req.flash("error", "Some error cooured while adding  to cart");
+		res.redirect("/");
+	}
+});
 
-	res.render("cart", { user, products });
+router.get("/logout", (req, res) => {
+	res.cookie("token", "");
+	req.flash("success", "Logged out successfully");
+	res.redirect("/");
 });
 router.post("/login", async (req, res) => {
 	try {

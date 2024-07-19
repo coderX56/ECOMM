@@ -7,8 +7,12 @@ const userSchema = new mongoose.Schema({
 	email: String,
 	password: String,
 	cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "products" }],
-	contact: Number,
-	profile: String,
+	profilepic: {
+		type: mongoose.Schema.Types.String,
+		default: "/images/profilepic/male.png",
+	},
+
+	gender: String,
 });
 const users = new mongoose.model("users", userSchema);
 

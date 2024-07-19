@@ -8,58 +8,80 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 		<title>Document</title>
 	</head>
-	<body class="bg-zinc-200">
-		<div  id="flash" class="flex justify-center items-center   w-full">
-            <% if ( error.length>0) { %>
-                <div class=" justify-center  bg-red-500 text-white p-4 w-48 h-full  rounded-md mb-4">
-                    <span class="inline-block text-lg"><%= error %></span>
-                </div>
-            <% } %>
+	<body class="bg-zinc-200 h-screen flex flex-col justify-center items-center">
+		<div id="flash" class="flex justify-center items-center w-full">
+			<% if ( error.length>0) { %>
+			<div
+				class="justify-center bg-red-500 text-white p-4 w-48 h-full rounded-md mb-4">
+				<span class="inline-block text-lg"><%= error %></span>
+			</div>
+			<% } %>
 		</div>
-		
 
-		<div  class="flex justify-center items-center " >
-		  <div class="flex flex-col  justify-center  h-screen w-2/6 gap-3 bg-zinc-300">
-                 <h1 class="text-5xl text-center">welcome to <span class="text-blue-600">Baggie</span></h1>
-                 <h2 class="text-2xl text-center">create your account</h2>
-            <div class="w-full">
-                <form method="post"  autocomplete="on" action="/users/signup" class="w-full flex flex-col items-center gap-3">
+		<div
+			class="flex flex-col justify-center items-center h-[550px] w-2/6 shadow-lg rounded-lg gap-3 bg-zinc-300">
+			<h1 class="text-5xl text-center">
+				welcome to <span class="text-blue-600">Baggie</span>
+			</h1>
+			<h2 class="text-2xl text-center">create your account</h2>
+			<div class="w-full">
+				<form
+					method="post"
+					autocomplete="on"
+					action="/users/signup"
+					class="w-full flex flex-col items-center gap-3">
 					<input
 						type="text"
-                        name="username"
+						name="username"
 						placeholder="Full Name"
-						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-					/>
+						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" />
 					<input
 						type="email"
-                        name="email"
+						name="email"
 						placeholder="Email"
-						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-					/>
+						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" />
 					<input
 						type="password"
-                        name="password"
+						name="password"
 						placeholder="Password"
-						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-					/>
+						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" />
+
+					<select
+						name="gender"
+						class="w-2/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300">
+						<option value="">Select Gender</option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+						<option value="other">Other</option>
+					</select>
+					<div
+						class="w-2/3 flex justify-center items-center rounded-lg bg-white">
+						<div>
+							<h1 class="mb-1 ml-12 text-md w-24">Profile Pic:</h1>
+						</div>
+						<div>
+							<input
+								type="file"
+								name="profilepic"
+								id="profilepic"
+								class="w-48 py-2 mr-8 pt-2 text-sm border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" />
+						</div>
+					</div>
 					<input
 						type="submit"
 						value="Create Account"
-						class="w-2/4 p-3 bg-blue-600 text-white rounded-3xl cursor-pointer hover:bg-blue-700"
-					/>
+						class="w-2/4 p-3 bg-blue-600 text-white rounded-3xl cursor-pointer hover:bg-blue-700" />
 				</form>
-
-               
-            </div>
+			</div>
 		</div>
+
 		<script>
 			setTimeout(() => {
-		const flash = document.getElementById('flash');
-		if (flash) {
-			flash.remove();
-		}
-	}, 2000)
-			
+				const flash = document.getElementById("flash");
+				if (flash) {
+					flash.remove();
+				}
+			}, 2000);
 		</script>
 	</body>
 </html>
